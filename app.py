@@ -13,6 +13,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
+
 # Extract the text from uploaded file 
 def extract_text(filepath):
     if filepath.endswith(".pdf"):
@@ -30,10 +31,12 @@ def extract_text(filepath):
 
     return ""
 
+no_of_questions = ""
 
 def generate_questions(text):
+    no_of_questions = ""
     prompt = f"""
-Generate 20 multiple choice questions from this lecture content.
+Generate {no_of_questions} multiple choice questions from this lecture content.
 Return ONLY a valid JSON array, no explanation, no markdown, no backticks.
 Each object must have exactly these fields:
 - "id": number
@@ -45,7 +48,7 @@ Lecture content:
 {text[:8000]}
 """
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}]
     )
     raw = response.choices[0].message.content.strip()
@@ -66,6 +69,8 @@ def upload():
     if request.method == "POST":
 
         session.clear() #clear session to clear previous data
+
+        no_of_questions = request.form.get("num_questions")
 
         file = request.files.get("file")
 
