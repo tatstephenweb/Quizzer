@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Lecture</title>
+  <title>Generate quizzes from lecture files</title>
   <link rel="manifest" href="/static/manifest.json">
   <meta name="theme-color" content="#E8500A">
   <meta name="mobile-web-app-capable" content="yes">
@@ -12,6 +12,7 @@
   <meta name="apple-mobile-web-app-title" content="QuizApp">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="static/icon-192.png" type="image/png">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -334,6 +335,7 @@
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <!-- Logo mark -->
+         <img src="/static/icon-512.png" style="width:30px">
         <span class="font-display font-700 text-lg tracking-tight" style="font-family: 'Syne', sans-serif;">Quizzer</span>
       </div>
       
@@ -354,7 +356,7 @@
       <!-- Hero -->
       <div class="text-center mb-10">
         <h1 class="text-4xl sm:text-5xl font-display font-800 leading-tight mb-4" style="font-family:'Syne', sans-serif; letter-spacing: -0.03em;">
-          Turn PDFs and <br>Powerpoints to Quizes.
+          Turn PDFs and <br>Powerpoints to Quizzes.
         </h1>
         <p class="text-base sm:text-lg" style="color: var(--muted); max-width: 480px; margin: 0 auto;">
           Upload your file we'll generate targeted questions so you can study smarter, not longer.
@@ -399,16 +401,17 @@
               <p class="text-sm mt-3" style="color: #16a34a; font-weight: 500;">File ready — click generate quiz</p>
             </div>
           </div>
+          <br>
+          <label style="margin:0; color: var(--muted);">Number of questions to generate</label><br>
+          <input style="border:solid 1px var(--border); margin-top:10px; border-radius:10px; font-size:20px; text-align:center" type="number" name="num_questions" value="40" class="px-8 py-4 text-base w-full sm:w-auto text-x2"> <br>
 
-          <input type="hidden" name="num_questons" value="40"> 
-
-          <input type="submit" value="Generate Quiz" id="generateBtn" class="btn-accent px-8 py-4 text-base w-full sm:w-auto">
+          <input type="submit" value="Generate Quiz" id="generateBtn" class="btn-accent px-8 py-4 text-base w-full">
 
         </form>
 
         <!-- RIGHT: How it works -->
         <div class="lg:col-span-2 space-y-4">
-          <div class="question-card p-6">
+          <div class="p-6">
             <h3 class="font-display font-700 text-base mb-5" style="font-family: 'Syne', sans-serif; font-weight: 700;">How it works</h3>
             <div class="space-y-4">
               <div class="flex gap-3 items-start">
@@ -436,7 +439,7 @@
           </div>
 
           <!-- Formats -->
-          <div class="question-card p-5">
+          <div class="p-5">
             <p class="text-xs font-700 uppercase tracking-widest mb-3" style="color: var(--muted); font-family: 'Syne', sans-serif;">Supported formats</p>
             <div class="space-y-2">
               <div class="flex items-center gap-3">
