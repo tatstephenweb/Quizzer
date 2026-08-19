@@ -69,7 +69,7 @@ def upload():
 
         session.clear() #clear session to clear previous data
 
-        no_of_questions = 5
+        no_of_questions = request.form.get("num_questions")
 
         file = request.files.get("file")
 
