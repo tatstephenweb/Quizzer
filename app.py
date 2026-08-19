@@ -31,10 +31,9 @@ def extract_text(filepath):
 
     return ""
 
-no_of_questions = ""
+#no_of_questions = ""
 
-def generate_questions(text):
-    no_of_questions = ""
+def generate_questions(text, no_of_questions):
     prompt = f"""
 Generate {no_of_questions} multiple choice questions from this lecture content.
 Return ONLY a valid JSON array, no explanation, no markdown, no backticks.
@@ -70,7 +69,7 @@ def upload():
 
         session.clear() #clear session to clear previous data
 
-        no_of_questions = request.form.get("num_questions")
+        no_of_questions = 5
 
         file = request.files.get("file")
 
@@ -89,7 +88,7 @@ def upload():
             if not text.strip():
                 return render_template("upload.html", error="Could not extract text from file. Try another file.")
 
-            questions = generate_questions(text)
+            questions = generate_questions(text, no_of_questions)
 
             #with open("questions.json", "w") as f:
              #   json.dump(questions, f, indent=2)
@@ -108,7 +107,16 @@ def start():
     session["current"] = 0
     session["score"] = 0
     session["answers"] = []
-    return render_template("quiz-generated.html")
+    questions = session.get("questions") #get the stored questions from session
+    if not questions:
+        return render_template("upload.html")
+
+    index = session.get("current", 0)
+    question = questions[index]
+    total = len(questions)
+    print("Total questions:", total)  # Debugging line to check the total number of questions
+
+    return render_template("quiz-generated.html", total=total, question=question, index=index)
 
 @app.route("/quiz", methods=["GET", "POST"])
 def quiz():
@@ -137,11 +145,11 @@ def quiz():
     total = len(questions)
     return render_template("quiz.html", question=question, index=index, total=total)
 
-@app.route("/result")
+@app.route("/result", methods=["GET", "POST"])
 def result():
     score = session.get("score", 0)
-    questions = session.get("questions", [])
-    total = len(load_questions())
+    questions = session.get("questions") #get the stored questions from session
+    total = len(questions)
     return render_template("result.html", score=score, total=total)
 
 @app.route("/home")
