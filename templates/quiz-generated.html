@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <link rel="manifest" href="/static/manifest.json">
-      <meta name="theme-color" content="#E8500A">
-      <meta name="mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-capable" content="yes">
-      <meta name="apple-mobile-web-app-status-bar-style" content="default">
-      <meta name="apple-mobile-web-app-title" content="QuizApp">
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#E8500A">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="QuizApp">
 
     <title>Document</title>
     <link rel="stylesheet" href="style.css">  
@@ -330,7 +330,7 @@
         <div>
           <h2 class="font-display font-700 text-2xl" style="font-family: 'Syne', sans-serif;">Quiz Ready</h2>
           <br><p class="text-sm mt-0.5" style="color: var(--muted);" id="previewSubtitle">Your Quiz is ready<br>Click Back to exit the quiz or click StartQuiz to start quiz for your lecture.</p>
-          <br><p class="text-sm mt-0.5" style="color: var(--muted);">No.of Questions: 10</p>
+          <br><p class="text-sm mt-0.5" style="color: var(--muted);">Number of Questions: {{ total }}</p>
                     
         </div>
         <div class="flex gap-2 flex-wrap">
@@ -342,11 +342,11 @@
       </div>
 
       <script>
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/static/sw.js')
-              .then(() => console.log('Service Worker registered'))
-              .catch(err => console.log('SW error:', err));
-          }
-        </script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/static/sw.js')
+      .then(() => console.log('Service Worker registered'))
+      .catch(err => console.log('SW error:', err));
+  }
+</script>
 </body>
 </html>

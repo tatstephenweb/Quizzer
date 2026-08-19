@@ -51,10 +51,11 @@
   </style>
 </head>
 <body>
-  <p>Quiz Complete!</p>
-  <h1 style="font-size:50px;font-weight: bold; color: black;">{{ score }} / {{ total }}</h1>
-  <p>You scored: {{ score }} out of {{ total }} questions</p>
-  <a href="/home" style="background-color: #e8500a;color: white;" class="px-5 py-3 text-sm">Go Back Home</a>
+  <a href="/" style="background-color: #e8500a;color: white;" class="px-5 py-3 text-sm">Go Back Home</a>
+  <br>
+  <p style="font-size:30px; margin-top:30px; color:#8a8070;">Quiz Completed!</p>
+  <h1 style="font-size:80px; color: #e8500a;">{{ score }}</h1>
+  <p style="font-size:13px; color:#8a8070;">You scored: {{ score }} out of {{ total }} questions</p>
 
 <script>
   if ('serviceWorker' in navigator) {
