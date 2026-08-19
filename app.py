@@ -4,6 +4,40 @@ from pptx import Presentation
 from groq import Groq
 from dotenv import load_dotenv
 
+#for importing libraries for creating pdfs
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch 
+import uuid 
+from flask import send_from_directory
+
+PDF_FOLDER = "generated_pdfs"
+os.makedirs(PDF_FOLDER, exist_ok=True)
+
+def create_questions_pdf(questions, filepath):
+    doc = SimpleDocTemplate(filepath, pagesize=letter,
+                             topMargin=0.7*inch, bottomMargin=0.7*inch)
+    styles = getSampleStyleSheet()
+    story = []
+
+    story.append(Paragraph("Practice Questions", styles['Title']))
+    story.append(Spacer(1, 16))
+
+    for q in questions:
+        story.append(Paragraph(f"{q['id']}. {q['question']}", styles['Heading3']))
+        story.append(Spacer(1, 4))
+
+        for i, option in enumerate(q['options']):
+            letter_label = chr(65 + i)  # A, B, C, D
+            story.append(Paragraph(f"{letter_label}. {option}", styles['Normal']))
+
+        story.append(Spacer(1, 6))
+        story.append(Paragraph(f"<b>Answer:</b> {q['answer']}", styles['Normal']))
+        story.append(Spacer(1, 16))
+
+    doc.build(story)
+
 app = Flask(__name__)
 app.secret_key = "quiz_secret_key"
 UPLOAD_FOLDER = "uploads"
@@ -90,11 +124,14 @@ def upload():
 
             questions = generate_questions(text, no_of_questions)
 
-            #with open("questions.json", "w") as f:
-             #   json.dump(questions, f, indent=2)
-            
             session["questions"] = questions #adding sessions so there will be differnt users even without login
 
+            # Generate PDF right away
+            pdf_filename = f"questions_{uuid.uuid4().hex}.pdf"
+            pdf_path = os.path.join(PDF_FOLDER, pdf_filename)
+            create_questions_pdf(questions, pdf_path)
+            session["pdf_filename"] = pdf_filename
+            
             return redirect(url_for("start"))
 
         except Exception as e:
@@ -159,6 +196,16 @@ def home():
 def load_questions():
     with open("questions.json") as f:
         return json.load(f)
+
+#endpoint for downloading the generated PDF
+@app.route("/download")
+def download_pdf():
+    pdf_filename = session.get("pdf_filename")
+    if not pdf_filename:
+        return "No file available.", 404
+    return send_from_directory(PDF_FOLDER, pdf_filename,
+                                as_attachment=True,
+                                download_name="practice_questions.pdf")
 
 if __name__ == "__main__":
     app.run(debug=True)
