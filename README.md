@@ -95,6 +95,6 @@ quizzer/
 
 ## Screenshots
 
-> _Add screenshots here once the app is deployed_
+no screenshots yet
 
 ---
