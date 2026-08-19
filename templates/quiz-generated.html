@@ -11,8 +11,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="QuizApp">
 
-    <title>Document</title>
+    <title>Quizzer | Take the Quiz</title>
     <link rel="stylesheet" href="style.css">  
+    <link rel="icon" href="static/icon-192.png" type="image/png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -318,6 +319,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <!-- Logo mark -->
+             <img src="/static/icon-512.png" style="width:30px">
             <span class="font-display font-700 text-lg tracking-tight" style="font-family: 'Syne', sans-serif; font-weight: 700;">Quizzer</span>
         </div>
         
@@ -329,11 +331,15 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h2 class="font-display font-700 text-2xl" style="font-family: 'Syne', sans-serif;">Quiz Ready</h2>
-          <br><p class="text-sm mt-0.5" style="color: var(--muted);" id="previewSubtitle">Your Quiz is ready<br>Click Back to exit the quiz or click StartQuiz to start quiz for your lecture.</p>
-          <br><p class="text-sm mt-0.5" style="color: var(--muted);">Number of Questions: {{ total }}</p>
+          <p class="font-display font-700 text-1xl" style="display:flex; align-items: center; gap: 10; color: var(--muted); font-family: 'Syne', sans-serif;">Number of Questions: <label class="font-800 text-2xl text-black ml-1" style="font-family: DM Sans;">{{ total }}</label></p>
+          <br>
+          <p class="text-sm mt-0.5" style="color: var(--muted);" id="previewSubtitle">Click Back to exit the quiz or click StartQuiz to start quiz for your lecture.</p>
+          <br><p class="text-sm mt-0.5" style="color: var(--muted);">You can download the generated PDF now or after concluding the quiz.</p>
+          <br>
+          <a class="btn-accent px-5 py-3 text-sm mt-2" href="{{ url_for('download_pdf') }}" class="btn">Download PDF</a>
                     
         </div>
-        <div class="flex gap-2 flex-wrap">
+        <div class="flex gap-2 flex-wrap mt-3">
           <a href="/" class="btn-ghost px-4 py-2 text-sm">Back</a>
           <a href="/quiz" class="btn-accent px-5 py-2 text-sm">Start Quiz</a>
         </div>
